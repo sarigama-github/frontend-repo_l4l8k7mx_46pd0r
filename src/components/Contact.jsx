@@ -1,5 +1,6 @@
-import { Phone, Mail, MapPin } from 'lucide-react'
+import { Phone, Mail, MapPin, Sparkles } from 'lucide-react'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 export default function Contact() {
   const [status, setStatus] = useState(null)
@@ -34,7 +35,15 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-slate-900">
+    <section id="contact" className="py-20 bg-slate-900 relative overflow-hidden">
+      <motion.div
+        className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full blur-3xl"
+        style={{ background:
+          'radial-gradient(closest-side, rgba(34,211,238,0.25), rgba(34,211,238,0.0))' }}
+        animate={{ x: [0, 25, -15, 0], y: [0, -10, 20, 0] }}
+        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10">
           <div>
@@ -48,7 +57,15 @@ export default function Contact() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <motion.form
+            onSubmit={handleSubmit}
+            className="rounded-2xl border border-white/10 bg-white/5 p-6 relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="absolute -right-3 -top-3 text-blue-300/70"><Sparkles size={24} /></div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm text-blue-100/80 mb-1">Nume</label>
@@ -69,7 +86,7 @@ export default function Contact() {
             </div>
             <button className="mt-5 w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg">Trimite</button>
             {status && <p className="mt-3 text-blue-100/90">{status}</p>}
-          </form>
+          </motion.form>
         </div>
       </div>
     </section>
